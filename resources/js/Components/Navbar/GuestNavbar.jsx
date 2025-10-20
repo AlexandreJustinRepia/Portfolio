@@ -11,7 +11,7 @@ export default function GuestNavbar() {
         <ApplicationLogo/>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-8 text-sm font-poppins">
+        <ul className="hidden md:flex gap-8 text-m font-poppins">
             <li><a href="#home" className="hover:text-red-400 transition">Home</a></li>
             <li><a href="#about" className="hover:text-red-400 transition">About</a></li>
             <li><a href="#skills" className="hover:text-red-400 transition">Skills</a></li>
