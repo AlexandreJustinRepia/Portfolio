@@ -2,7 +2,7 @@ import React from "react";
 
 export default function AboutMe() {
   return (
-    <section className="bg-black text-white py-16 px-6 md:px-20 min-h-screen" data-aos="fade-right">
+    <section id="about" className="bg-black text-white py-16 px-6 md:px-20 min-h-screen" data-aos="fade-right">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10">
         {/* --- Left: Image --- */}
         <div className="flex-shrink-0 w-full md:w-1/3 flex justify-center">
