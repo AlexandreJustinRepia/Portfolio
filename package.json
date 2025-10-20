@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "@fontsource/fira-code": "^5.2.7",
-        "@fontsource/poppins": "^5.2.7"
+        "@fontsource/poppins": "^5.2.7",
+        "lucide-react": "^0.546.0"
     }
 }
