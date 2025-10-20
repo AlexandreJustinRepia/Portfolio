@@ -6,6 +6,7 @@ import { Head } from '@inertiajs/react';
 import GuestNavbar from '@/Components/Navbar/GuestNavbar';
 import HeroSection from '@/Components/HeroSection';
 import AboutMe from '@/Components/AboutMe';
+import Skills from '@/Components/Skills';
 
 export default function Welcome() {
   useEffect(() => {
@@ -21,7 +22,8 @@ export default function Welcome() {
       <Head title="Welcome" />
       <GuestNavbar />
       <HeroSection />
-      <AboutMe />
+      <AboutMe/>
+      <Skills/>
     </div>
   );
 }

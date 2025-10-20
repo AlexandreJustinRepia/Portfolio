@@ -6,7 +6,7 @@ export default function GuestNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-black-200 text-white px-6 py-4 flex justify-between items-center shadow-md fixed w-full top-0 z-50">
+    <nav className="bg-black text-white px-6 py-4 flex justify-between items-center shadow-md fixed w-full top-0 z-50">
         {/* Logo */}
         <ApplicationLogo/>
 
