@@ -2,12 +2,12 @@ import React from "react";
 
 export default function AboutMe() {
   return (
-    <section id="about" className="bg-black text-white py-16 px-6 md:px-20 min-h-screen" data-aos="fade-right">
+    <section id="about" className="bg-black text-white py-16 px-6 md:px-20 min-h-screen scroll-mt-24" data-aos="fade-right">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10">
         {/* --- Left: Image --- */}
         <div className="flex-shrink-0 w-full md:w-1/3 flex justify-center">
           <img
-            src="/path-to-your-photo.jpg"
+            src="images/me.jpg"
             alt="Alexandre Justin Repia"
             className="rounded-2xl shadow-lg w-56 sm:w-64 md:w-72 lg:w-80 object-cover"
           />

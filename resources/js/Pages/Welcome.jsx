@@ -18,7 +18,7 @@ export default function Welcome() {
   }, []);
 
   return (
-    <div className="bg-black">
+    <div className="bg-black overflow-x-hidden">
       <Head title="Welcome" />
       <GuestNavbar />
       <HeroSection />
