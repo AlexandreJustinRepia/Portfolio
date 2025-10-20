@@ -4,6 +4,7 @@ export default function HeroSection() {
 return (
     <section
         id="home"
+        data-aos="fade-up"
         className="bg-black text-white min-h-screen flex items-center px-8 md:px-20"
         >
         <div className="max-w-3xl space-y-6">
@@ -20,7 +21,7 @@ return (
 
             {/* Short Bio */}
             <p className="text-gray-400 text-base md:text-lg font-poppins">
-                I build secure, scalable web applications with Laravel and Vue.
+                I build scalable web applications with Laravel, Vue, and React.
                 Currently exploring React and UI design to create complete web experiences.
             </p>
 
