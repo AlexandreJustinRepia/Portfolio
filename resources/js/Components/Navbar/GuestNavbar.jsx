@@ -6,12 +6,12 @@ export default function GuestNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-black text-white px-6 py-4 flex justify-between items-center shadow-md fixed w-full top-0 z-50">
+    <nav className="bg-black-200 text-white px-6 py-4 flex justify-between items-center shadow-md fixed w-full top-0 z-50">
         {/* Logo */}
         <ApplicationLogo/>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-8 text-lg font-poppins">
+        <ul className="hidden md:flex gap-8 text-sm font-poppins">
             <li><a href="#home" className="hover:text-red-400 transition">Home</a></li>
             <li><a href="#about" className="hover:text-red-400 transition">About</a></li>
             <li><a href="#skills" className="hover:text-red-400 transition">Skills</a></li>
@@ -29,7 +29,10 @@ export default function GuestNavbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-            <div className="absolute top-full left-0 w-full bg-black flex flex-col items-center gap-6 py-6 md:hidden border-t border-gray-700">
+            <div className={`absolute top-full left-0 w-full bg-black flex flex-col items-center gap-6 py-6 md:hidden border-t border-gray-700 transition-all duration-300 ease-in-out ${
+                isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+            }`}
+            >
             <a href="#home" className="hover:text-red-400 transition" onClick={() => setIsOpen(false)}>Home</a>
             <a href="#about" className="hover:text-red-400 transition" onClick={() => setIsOpen(false)}>About</a>
             <a href="#skills" className="hover:text-red-400 transition" onClick={() => setIsOpen(false)}>Skills</a>
