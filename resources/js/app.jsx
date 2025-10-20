@@ -14,31 +14,32 @@ const rootEl = document.getElementById('app');
 const root = createRoot(rootEl);
 
 function AppLoader() {
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [inertiaApp, setInertiaApp] = useState(null);
 
-    useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 2500);
-        return () => clearTimeout(timer);
-    }, []);
+  useEffect(() => {
+    // Start creating the Inertia app
+    createInertiaApp({
+      title: (title) => `${title} - ${appName}`,
+      resolve: (name) =>
+        resolvePageComponent(
+          `./Pages/${name}.jsx`,
+          import.meta.glob('./Pages/**/*.jsx'),
+        ),
+      setup({ App, props }) {
+        // When the Inertia app is ready, store it and hide the loading screen
+        setInertiaApp(<App {...props} />);
+        setLoading(false);
+      },
+      progress: {
+        color: '#ef4444', // Tailwind red-500
+      },
+    });
+  }, []);
 
-    if (loading) return <WelcomeLoadingScreen onFinish={() => setLoading(false)} />;
+  if (loading) return <WelcomeLoadingScreen />;
 
-    return (
-        createInertiaApp({
-            title: (title) => `${title} - ${appName}`,
-            resolve: (name) =>
-                resolvePageComponent(
-                    `./Pages/${name}.jsx`,
-                    import.meta.glob('./Pages/**/*.jsx'),
-                ),
-            setup({ el, App, props }) {
-                root.render(<App {...props} />);
-            },
-            progress: {
-                color: '#ef4444', // Tailwind red-500
-            },
-        })
-    );
+  return inertiaApp;
 }
 
 root.render(<AppLoader />);
