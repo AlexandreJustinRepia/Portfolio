@@ -3,7 +3,7 @@ import Logo from "@/Components/Logo";
 
 export default function Skills() {
   return (
-    <section className="bg-black text-white py-16 px-6 md:px-20" data-aos="fade-left">
+    <section className="bg-black text-white py-16 px-6 md:px-20 min-h-screen" data-aos="fade-left">
       <div className="max-w-6xl mx-auto flex flex-col items-center gap-10 text-center">
         {/* --- Centered Text --- */}
         <div className="w-full">
