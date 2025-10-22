@@ -1,6 +1,40 @@
 import React from "react";
+import {
+  SiLaravel,
+  SiVuedotjs,
+  SiReact,
+  SiTailwindcss,
+  SiMysql,
+  SiPhp,
+  SiHtml5,
+  SiApache,
+  SiMariadb,
+  SiSqlite,
+  SiGit,
+  SiGithub,
+  SiNodedotjs,
+  SiMongodb,
+} from "react-icons/si";
 
 export default function ProjectCard({ title, description, image, techStack, liveUrl, repoUrl }) {
+  // Map tech stack to icons and colors
+  const techIcons = {
+    Laravel: { icon: <SiLaravel size={20} color="#ff2d2d" />, color: "#ff2d2d" },
+    Vue: { icon: <SiVuedotjs size={20} color="#42b883" />, color: "#42b883" },
+    React: { icon: <SiReact size={20} color="#61dafb" />, color: "#61dafb" },
+    "Tailwind CSS": { icon: <SiTailwindcss size={20} color="#38bdf8" />, color: "#38bdf8" },
+    MySQL: { icon: <SiMysql size={20} color="#4479a1" />, color: "#4479a1" },
+    PHP: { icon: <SiPhp size={20} color="#787cb5" />, color: "#787cb5" },
+    HTML5: { icon: <SiHtml5 size={20} color="#e34f26" />, color: "#e34f26" },
+    Apache: { icon: <SiApache size={20} color="#d22128" />, color: "#d22128" },
+    MariaDB: { icon: <SiMariadb size={20} color="#003545" />, color: "#003545" },
+    SQLite: { icon: <SiSqlite size={20} color="#003b57" />, color: "#003b57" },
+    Git: { icon: <SiGit size={20} color="#f34f29" />, color: "#f34f29" },
+    GitHub: { icon: <SiGithub size={20} color="#ffffff" />, color: "#ffffff" },
+    "Node.js": { icon: <SiNodedotjs size={20} color="#8cc84b" />, color: "#8cc84b" },
+    MongoDB: { icon: <SiMongodb size={20} color="#47a248" />, color: "#47a248" },
+  };
+
   return (
     <div
       className="bg-gray-900 rounded-xl shadow-lg overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-2xl"
@@ -24,12 +58,13 @@ export default function ProjectCard({ title, description, image, techStack, live
         </p>
         <div className="flex flex-wrap gap-2 mb-4">
           {techStack.map((tech, index) => (
-            <span
+            <div
               key={index}
-              className="px-3 py-1 bg-red-600 text-white text-sm rounded-full"
+              className="flex items-center px-3 py-1 bg-red-600 text-white text-sm rounded-full"
             >
-              {tech}
-            </span>
+              {techIcons[tech]?.icon || null}
+              <span className="ml-2">{tech}</span>
+            </div>
           ))}
         </div>
 

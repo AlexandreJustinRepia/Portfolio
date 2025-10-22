@@ -7,6 +7,7 @@ export default function RepoCommits() {
   const [error, setError] = useState(null);
   const username = "AlexandreJustinRepia";
   const repo = "Portfolio";
+  const repoCommitsUrl = `https://github.com/${username}/${repo}/commits`;
 
   useEffect(() => {
     setLoading(true);
@@ -18,7 +19,7 @@ export default function RepoCommits() {
         return res.json();
       })
       .then((data) => {
-        setCommits(data.slice(0, 5)); // Show latest 5 commits
+        setCommits(data.slice(0, 6)); // Show latest 5 commits
         setLoading(false);
       })
       .catch((err) => {
@@ -96,6 +97,20 @@ export default function RepoCommits() {
               </div>
             ))}
           </div>
+        )}
+
+        {/* --- View More Button --- */}
+        {!loading && !error && commits.length > 0 && (
+          <a
+            href={repoCommitsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 hover:shadow-lg transition-all duration-300"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            View More Commits
+          </a>
         )}
       </div>
     </section>
