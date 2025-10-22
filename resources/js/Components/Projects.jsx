@@ -1,6 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
+import ProjectCard from "./ProjectCards";
 
 export default function Projects() {
+  // Sample project data (replace with your actual projects)
+  const projects = [
+    {
+      title: "PawsnClaws",
+      description:
+        "A full-stack community platform for pet adoption and stray animal management.",
+      image: "images/ecommerce.jpg",
+      techStack: ["Laravel", "Vue", "Tailwind CSS", "MySQL"],
+      repoUrl: "https://github.com/AlexandreJustinRepia/PNC.git",
+    },
+    {
+      title: "Task Manager",
+      description:
+        "A task management app with real-time updates, drag-and-drop interface, and team collaboration features.",
+      image: "images/taskmanager.jpg",
+      techStack: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
+      repoUrl: "https://github.com/AlexandreJustinRepia/taskmanager",
+    },
+    {
+      title: "Portfolio Website",
+      description:
+        "A personal portfolio showcasing my projects, skills, and contact information with a modern, responsive design.",
+      image: "images/portfolio.jpg",
+      techStack: ["React", "Tailwind CSS", "Inertia.js"],
+      repoUrl: "https://github.com/AlexandreJustinRepia/Portfolio",
+    },
+  ];
 
   return (
     <section
@@ -18,9 +46,21 @@ export default function Projects() {
               transition-all duration-500 ease-in-out group-hover:w-32"
             ></span>
           </h2>
-          <h1 className="text-3xl sm:text-4xl">
-            Coming Soon!
-          </h1>
+        </div>
+
+        {/* --- Project Cards --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={index}
+              title={project.title}
+              description={project.description}
+              image={project.image}
+              techStack={project.techStack}
+              liveUrl={project.liveUrl}
+              repoUrl={project.repoUrl}
+            />
+          ))}
         </div>
       </div>
     </section>
