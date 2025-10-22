@@ -1,15 +1,31 @@
 import { useEffect, useState } from "react";
+import { FaGithub } from "react-icons/fa";
 
 export default function RepoCommits() {
   const [commits, setCommits] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const username = "AlexandreJustinRepia";
   const repo = "Portfolio";
 
   useEffect(() => {
+    setLoading(true);
     fetch(`https://api.github.com/repos/${username}/${repo}/commits`)
-      .then((res) => res.json())
-      .then((data) => setCommits(data.slice(0, 5))) // show latest 5 commits
-      .catch((err) => console.error(err));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch commits");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setCommits(data.slice(0, 5)); // Show latest 5 commits
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+        console.error(err);
+      });
   }, []);
 
   return (
@@ -30,28 +46,57 @@ export default function RepoCommits() {
           </h2>
         </div>
 
-        {/* --- Commit List --- */}
-        <ul className="space-y-4 text-left w-full max-w-3xl">
-          {commits.map((commit, index) => (
-            <li
-              key={index}
-              className="border-b border-gray-700 pb-3 hover:text-red-400 transition text-lg"
-            >
-              <a
-                href={commit.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium"
+        {/* --- Loading State --- */}
+        {loading && (
+          <div className="text-gray-400 text-lg">Loading commits...</div>
+        )}
+
+        {/* --- Error State --- */}
+        {error && (
+          <div className="text-red-400 text-lg">
+            Error: {error}. Please try again later.
+          </div>
+        )}
+
+        {/* --- Commit Cards --- */}
+        {!loading && !error && commits.length === 0 && (
+          <div className="text-gray-400 text-lg">No commits found.</div>
+        )}
+        {!loading && !error && commits.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            {commits.map((commit, index) => (
+              <div
+                key={index}
+                className="bg-gray-900 rounded-xl shadow-lg overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-2xl"
+                data-aos="fade-up"
+                data-aos-delay={100 * (index + 1)}
               >
-                {commit.commit.message}
-              </a>
-              <p className="text-sm text-gray-400 mt-1">
-                by {commit.commit.author.name} on{" "}
-                {new Date(commit.commit.author.date).toLocaleDateString()}
-              </p>
-            </li>
-          ))}
-        </ul>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <FaGithub className="text-red-400 text-2xl" />
+                    <h3 className="text-lg sm:text-xl font-semibold text-white truncate">
+                      {commit.commit.message}
+                    </h3>
+                  </div>
+                  <p className="text-gray-300 text-sm sm:text-base mb-2">
+                    by {commit.commit.author.name}
+                  </p>
+                  <p className="text-gray-400 text-sm mb-4">
+                    {new Date(commit.commit.author.date).toLocaleDateString()}
+                  </p>
+                  <a
+                    href={commit.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block px-4 py-2 text-red-400 font-semibold rounded-md border border-red-400 hover:bg-red-400 hover:text-white transition"
+                  >
+                    View Commit
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
