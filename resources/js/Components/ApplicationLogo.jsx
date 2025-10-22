@@ -1,6 +1,9 @@
+import { Link } from '@inertiajs/react';
+
 export default function ApplicationLogo() {
   return (
-    <div
+    <Link
+      href="/"
       className="
         text-4xl md:text-3xl font-extrabold font-mono
         text-white transition-all duration-500 ease-in-out
@@ -15,6 +18,6 @@ export default function ApplicationLogo() {
       <span className="text-red-500 transition-colors duration-500 hover:text-white">
         /&gt;
       </span>
-    </div>
+    </Link>
   );
 }
