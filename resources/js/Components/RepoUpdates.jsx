@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaSyncAlt } from "react-icons/fa";
 
 export default function RepoCommits() {
   const [commits, setCommits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0); // State to trigger refresh
   const username = "AlexandreJustinRepia";
   const repo = "Portfolio";
   const repoCommitsUrl = `https://github.com/${username}/${repo}/commits`;
@@ -19,7 +20,7 @@ export default function RepoCommits() {
         return res.json();
       })
       .then((data) => {
-        setCommits(data.slice(0, 6)); // Show latest 5 commits
+        setCommits(data.slice(0, 6)); // Show latest 6 commits
         setLoading(false);
       })
       .catch((err) => {
@@ -27,7 +28,11 @@ export default function RepoCommits() {
         setLoading(false);
         console.error(err);
       });
-  }, []);
+  }, [refreshTrigger]); // Re-run effect when refreshTrigger changes
+
+  const handleRefresh = () => {
+    setRefreshTrigger((prev) => prev + 1); // Increment to trigger useEffect
+  };
 
   return (
     <section
@@ -46,6 +51,18 @@ export default function RepoCommits() {
             ></span>
           </h2>
         </div>
+
+        {/* --- Refresh Button --- */}
+        <button
+          onClick={handleRefresh}
+          className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 hover:shadow-lg transition-all duration-300"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          disabled={loading}
+        >
+          <FaSyncAlt className={`text-white ${loading ? "animate-spin" : ""}`} />
+          Refresh Commits
+        </button>
 
         {/* --- Loading State --- */}
         {loading && (
