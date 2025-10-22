@@ -15,9 +15,16 @@ export default function AboutMe() {
 
             {/* --- Right: Text --- */}
             <div className="w-full md:w-2/3 text-center md:text-left">
-                <h2 className="relative text-3xl sm:text-4xl md:text-5xl font-bold mb-10 inline-block">
+                <h2 className="relative text-3xl sm:text-4xl md:text-5xl font-bold mb-10 inline-block group cursor-pointer">
                     About Me
-                    <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 h-[3px] w-16 bg-red-500 rounded"></span>
+                    <span
+                        className="
+                        absolute bottom-[-10px] left-1/2 transform -translate-x-1/2
+                        h-[3px] w-16 bg-red-500 rounded
+                        transition-all duration-500 ease-in-out
+                        group-hover:w-32
+                        "
+                    ></span>
                 </h2>
 
                 <p className="text-gray-300 leading-relaxed mb-4 text-sm sm:text-base">
