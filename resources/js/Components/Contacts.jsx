@@ -1,6 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
+import ContactCard from "./ContactCard";
+import { FaEnvelope, FaGithub } from "react-icons/fa";
 
 export default function Contacts() {
+  // Sample contact data (replace with your actual contact details)
+  const contacts = [
+    {
+      title: "Email",
+      icon: <FaEnvelope className="text-red-400 text-4xl" />,
+      link: "mailto:alexwaquiz11@gmail.com",
+      details: "alexwaquiz11@gmail.com",
+    },
+    {
+      title: "GitHub",
+      icon: <FaGithub className="text-red-400 text-4xl" />,
+      link: "https://github.com/AlexandreJustinRepia",
+      details: "Check out my repositories",
+    },
+  ];
 
   return (
     <section
@@ -18,9 +35,19 @@ export default function Contacts() {
               transition-all duration-500 ease-in-out group-hover:w-32"
             ></span>
           </h2>
-          <h1 className="text-3xl sm:text-4xl">
-            Coming Soon!
-          </h1>
+        </div>
+
+        {/* --- Contact Cards --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          {contacts.map((contact, index) => (
+            <ContactCard
+              key={index}
+              title={contact.title}
+              icon={contact.icon}
+              link={contact.link}
+              details={contact.details}
+            />
+          ))}
         </div>
       </div>
     </section>
