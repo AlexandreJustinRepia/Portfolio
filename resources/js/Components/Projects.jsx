@@ -10,15 +10,15 @@ export default function Projects() {
         "A full-stack community platform for pet adoption and stray animal management.",
       image: "images/thumbnails/PNC.png",
       techStack: ["Laravel", "Vue", "Tailwind CSS", "MySQL"],
-      repoUrl: "https://github.com/AlexandreJustinRepia/PNC.git",
+      repoUrl: "https://github.com/AlexandreJustinRepia/PNC",
     },
     {
       title: "Document Tracking System",
       description:
-        "A task management app with real-time updates, drag-and-drop interface, and team collaboration features.",
-      image: "images/taskmanager.jpg",
-      techStack: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
-      repoUrl: "https://github.com/AlexandreJustinRepia/taskmanager",
+        "A web-based document tracking system that streamlines the routing, monitoring, and management of official documents across multiple offices in real time.",
+      image: "images/thumbnails/DTS.png",
+      techStack: ["Laravel", "Vue", "Tailwind CSS", "MySQL", "Inertia.js"],
+      repoUrl: "https://github.com/AlexandreJustinRepia/DTS-DENR",
     },
     {
       title: "Portfolio Website",
