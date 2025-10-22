@@ -10,6 +10,7 @@ import Skills from '@/Components/Skills';
 import Projects from '@/Components/Projects';
 import Contacts from '@/Components/Contacts';
 import RepoCommits from "@/Components/RepoUpdates";
+import Footer from '@/Components/Footer';
 
 export default function Welcome() {
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function Welcome() {
       <Projects/>
       <Contacts/>
       <RepoCommits/>
+      <Footer/>
     </div>
   );
 }
