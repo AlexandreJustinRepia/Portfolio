@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ChatBotController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -28,5 +29,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/contact', [ContactController::class, 'sendMessage']);
+Route::post('/chatbot', [ChatBotController::class, 'reply']);
 
 require __DIR__.'/auth.php';

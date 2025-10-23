@@ -11,6 +11,7 @@ import Contacts from '@/Components/Contacts';
 import RepoCommits from "@/Components/RepoUpdates";
 import Footer from '@/Components/Footer';
 import Modal from '@/Components/Modals/Modal';
+import PortfolioChat from "@/Components/PortfolioChat";
 
 export default function Welcome() {
   const [modalState, setModalState] = useState({
@@ -41,6 +42,7 @@ export default function Welcome() {
       <Skills />
       <Projects />
       <Contacts modalState={modalState} setModalState={setModalState} closeModal={closeModal} />
+      <PortfolioChat />
       <RepoCommits />
       <Footer />
       <Modal
