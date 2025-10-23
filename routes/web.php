@@ -29,6 +29,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/contact', [ContactController::class, 'sendMessage']);
-Route::post('/chatbot', [ChatBotController::class, 'reply']);
+Route::post('/butler', [ChatBotController::class, 'reply']);
 
 require __DIR__.'/auth.php';

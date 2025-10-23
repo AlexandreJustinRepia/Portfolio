@@ -13,7 +13,7 @@ export default function Projects() {
       repoUrl: "https://github.com/AlexandreJustinRepia/PNC",
     },
     {
-      title: "Document Tracking System",
+      title: "DENR - Document Tracking System",
       description:
         "A web-based document tracking system that streamlines the routing, monitoring, and management of official documents across multiple offices in real time.",
       image: "images/thumbnails/dts.png",

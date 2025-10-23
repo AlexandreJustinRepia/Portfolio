@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { FaRobot, FaTimes } from "react-icons/fa";
 
-export default function PortfolioChat() {
+export default function PortfolioButler() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
@@ -34,7 +34,7 @@ export default function PortfolioChat() {
     setIsThinking(true);
 
     try {
-      const response = await axios.post("/chatbot", { message: input });
+      const response = await axios.post("/butler", { message: input });
       const botReply = response.data.reply;
 
       const botMessage = { role: "bot", text: "" };

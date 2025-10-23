@@ -26,6 +26,11 @@ class ChatBotController extends Controller
         Alexandre is skilled in Laravel, React, Vue.js, Tailwind CSS, and MySQL.
         He has built projects like PawsnClawsPH (a pet adoption hub) and a Document Tracking System.
 
+        🔹 Latest Projects:
+        If the user asks about Alexandre’s latest or current projects,
+        respond by saying something like:
+        'Currently, Alexandre is working on his personal portfolio website and a Document Tracking System for the Department of Environment and Natural Resources (DENR).'
+
         🔹 Collaboration & Inquiries:
         If the user expresses interest in creating a project, collaborating, hiring, or discussing business opportunities,
         kindly respond with something like:
@@ -51,5 +56,6 @@ class ChatBotController extends Controller
             'reply' => $data['choices'][0]['message']['content'] ?? "Sorry, I couldn’t process that request."
         ]);
     }
+
 
 }
