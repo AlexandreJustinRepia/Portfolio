@@ -8,7 +8,7 @@ export default function Projects() {
       title: "PawsnClaws",
       description:
         "A full-stack community platform for pet adoption and stray animal management.",
-      image: "images/thumbnails/PNC.png",
+      image: "images/thumbnails/pnc.png",
       techStack: ["Laravel", "Vue", "Tailwind CSS", "MySQL"],
       repoUrl: "https://github.com/AlexandreJustinRepia/PNC",
     },
@@ -16,7 +16,7 @@ export default function Projects() {
       title: "Document Tracking System",
       description:
         "A web-based document tracking system that streamlines the routing, monitoring, and management of official documents across multiple offices in real time.",
-      image: "images/thumbnails/DTS.png",
+      image: "images/thumbnails/dts.png",
       techStack: ["Laravel", "Vue", "Tailwind CSS", "MySQL", "Inertia.js"],
       repoUrl: "https://github.com/AlexandreJustinRepia/DTS-DENR",
     },
