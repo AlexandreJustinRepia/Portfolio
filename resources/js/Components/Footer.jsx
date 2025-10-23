@@ -19,7 +19,6 @@ export default function Footer() {
   return (
     <footer
       className="bg-gray-900 text-white py-8 px-6 md:px-20"
-      data-aos-delay="100"
     >
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         {/* --- Copyright Notice --- */}
@@ -39,8 +38,6 @@ export default function Footer() {
               rel="noopener noreferrer"
               title={social.title}
               className="flex items-center"
-              data-aos="fade-up"
-              data-aos-delay={100 * (index + 1)}
             >
               {social.icon}
             </a>

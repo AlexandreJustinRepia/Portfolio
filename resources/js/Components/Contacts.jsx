@@ -1,9 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import ContactCard from "./ContactCard";
-import { FaEnvelope, FaGithub } from "react-icons/fa";
+import { FaEnvelope, FaGithub, FaPaperPlane } from "react-icons/fa";
+import axios from "axios";
 
-export default function Contacts() {
-  // Sample contact data (replace with your actual contact details)
+export default function Contacts({ modalState, setModalState, closeModal }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setModalState({ isOpen: true, type: "loading", message: "Sending your message..." });
+
+    try {
+      const response = await axios.post("/contact", formData);
+
+      if (response.data.success) {
+        setModalState({
+          isOpen: true,
+          type: "success",
+          message: "Message sent successfully!",
+        });
+        setFormData({ name: "", email: "", message: "" });
+      }
+    } catch (error) {
+      console.error(error);
+      setModalState({
+        isOpen: true,
+        type: "error",
+        message: "❌ Failed to send message. Please try again later.",
+      });
+    }
+  };
+
+  // Contact data
   const contacts = [
     {
       title: "Email",
@@ -37,8 +74,9 @@ export default function Contacts() {
           </h2>
         </div>
 
-        {/* --- Contact Cards --- */}
+        {/* --- Contact Cards and Form --- */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          {/* Contact Cards */}
           {contacts.map((contact, index) => (
             <ContactCard
               key={index}
@@ -48,6 +86,65 @@ export default function Contacts() {
               details={contact.details}
             />
           ))}
+
+          {/* Contact Form Card */}
+          <div
+            className="bg-gray-900 rounded-xl shadow-lg overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-2xl"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div className="p-6">
+              <div className="flex justify-center mb-4">
+                <FaPaperPlane className="text-red-400 text-4xl" />
+              </div>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
+                Send a Message
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Your Name"
+                    className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-400"
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Your Email"
+                    className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-400"
+                    required
+                  />
+                </div>
+                <div>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Your Message"
+                    rows="4"
+                    className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-400"
+                    required
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-2 text-red-400 font-semibold rounded-md border border-red-400 hover:bg-red-400 hover:text-white transition"
+                  disabled={modalState.type === "loading"}
+                >
+                  <FaPaperPlane />
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </section>
