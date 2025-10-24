@@ -40,7 +40,7 @@ export default function Skills() {
     {
       title: "Full-stack web development with Laravel and Vue/React",
       icon: <SiLaravel size={48} color="#ff2d2d" />,
-      proficiency: 95,
+      proficiency: 90,
     },
     {
       title: "Responsive design using Tailwind CSS",
@@ -50,7 +50,7 @@ export default function Skills() {
     {
       title: "Database management (MySQL, MariaDB, SQLite)",
       icon: <SiMysql size={48} color="#4479a1" />,
-      proficiency: 85,
+      proficiency: 90,
     },
     {
       title: "Version control using Git and GitHub",
@@ -60,17 +60,17 @@ export default function Skills() {
     {
       title: "API integration and RESTful design",
       icon: <SiNodedotjs size={48} color="#8cc84b" />,
-      proficiency: 85,
+      proficiency: 95,
     },
     {
       title: "Backend server setup using Apache and Node.js",
       icon: <SiApache size={48} color="#d22128" />,
-      proficiency: 85,
+      proficiency: 90,
     },
     {
       title: "Deployment and hosting experience",
       icon: <SiGithub size={48} color="#ffffff" />,
-      proficiency: 80,
+      proficiency: 95,
     },
   ];
 

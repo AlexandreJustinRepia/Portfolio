@@ -28,7 +28,6 @@ export default function Welcome() {
     AOS.init({
       duration: 1000, // animation duration (ms)
       once: true,     // animation triggers once per scroll
-      easing: "ease-out-cubic",
       offset: 50,
     });
   }, []);

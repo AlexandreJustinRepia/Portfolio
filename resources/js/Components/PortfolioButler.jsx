@@ -1,14 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { FaRobot, FaTimes } from "react-icons/fa";
+import ReactMarkdown from "react-markdown";
 
 export default function PortfolioButler() {
+  const sessionIdRef = useRef(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false); // State to toggle chat visibility
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const chatEndRef = useRef(null);
+
+  useEffect(() => {
+    if (!sessionIdRef.current) {
+      sessionIdRef.current = crypto.randomUUID();
+    }
+  }, []);
 
   // Auto-greeting when chat first opens
   useEffect(() => {
@@ -17,10 +25,10 @@ export default function PortfolioButler() {
         setMessages([
           {
             role: "bot",
-            text: "Hi there! 👋 I’m AjBot, Alexandre Justin Repia’s assistant. How can I help you today?",
+            text: "Hi there! I’m Aelex, Alexandre Justin Repia’s assistant. How can I help you today?",
           },
         ]);
-      }, 500); // Small delay for natural feel
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [isChatOpen]);
@@ -34,7 +42,12 @@ export default function PortfolioButler() {
     setIsThinking(true);
 
     try {
-      const response = await axios.post("/butler", { message: input });
+      const response = await axios.post("/butler", {
+        message: input,
+        conversation: messages,
+        session_id: sessionIdRef.current,
+      });
+
       const botReply = response.data.reply;
 
       const botMessage = { role: "bot", text: "" };
@@ -42,14 +55,21 @@ export default function PortfolioButler() {
       setIsThinking(false);
       setIsTyping(true);
 
-      // Instant typing
-      setMessages((prev) => {
-        const updated = [...prev];
-        updated[updated.length - 1].text = botReply;
-        return updated;
-      });
-
-      setIsTyping(false);
+      // Typing effect: character by character
+      let typedText = "";
+      const typingInterval = setInterval(() => {
+        if (typedText.length < botReply.length) {
+          typedText += botReply[typedText.length];
+          setMessages((prev) => {
+            const updated = [...prev];
+            updated[updated.length - 1].text = typedText;
+            return updated;
+          });
+        } else {
+          clearInterval(typingInterval);
+          setIsTyping(false);
+        }
+      }, 5);
     } catch (error) {
       setIsThinking(false);
       setIsTyping(false);
@@ -60,49 +80,56 @@ export default function PortfolioButler() {
     }
   };
 
-  // Auto-scroll to bottom when messages update
+  // Auto-scroll to bottom
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isThinking, isTyping]);
 
-  // Toggle chat window
   const toggleChat = () => {
     setIsChatOpen((prev) => !prev);
   };
 
   return (
     <>
-      {/* Floating Chat Button */}
-      <button
-        onClick={toggleChat}
-        className="fixed bottom-6 right-6 bg-gray-900 text-red-400 p-4 rounded-full shadow-lg hover:bg-red-500 hover:text-white transition-all duration-300 transform hover:scale-110 z-[9998]"
-        data-aos="fade-up"
-        data-aos-delay="200"
-        aria-label={isChatOpen ? "Close chat" : "Open chat"}
-      >
-        <FaRobot className="text-3xl" />
-      </button>
+      {/* Floating Chat Button with Tooltip */}
+      <div className="fixed bottom-6 right-6 z-[9998] group">
+        <button
+          onClick={toggleChat}
+          className="bg-gray-900 text-red-400 p-4 rounded-full shadow-lg hover:bg-red-500 hover:text-white transition-all duration-300 transform hover:scale-110"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          aria-label={isChatOpen ? "Close chat" : "Open chat"}
+        >
+          <FaRobot className="text-3xl" />
+        </button>
+        <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
+          Tap me if you want assistance!
+        </div>
+      </div>
 
       {/* Chat Window */}
       {isChatOpen && (
         <div
-          className="fixed bottom-20 right-6 w-80 bg-gray-900 text-white rounded-lg shadow-lg border border-gray-700 flex flex-col z-[9999]"
+          className="fixed bottom-20 right-6 w-80 md:w-96 bg-gray-900 text-white rounded-lg shadow-lg border border-gray-700 flex flex-col z-[9999] h-[500px] max-h-[80vh]"
           data-aos="slide-up"
           data-aos-duration="300"
         >
           {/* Chat Header */}
-          <div className="flex items-center justify-between p-3 bg-red-500 rounded-t-lg">
-            <h3 className="text-lg font-bold text-white">AjBot</h3>
-            <button
-              onClick={toggleChat}
-              className="text-white hover:text-gray-200 transition-transform duration-300 hover:scale-110"
-            >
-              <FaTimes className="text-xl" />
-            </button>
+          <div className="flex flex-col p-3 bg-red-500 rounded-t-lg">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-white">Aelex</h3>
+              <button
+                onClick={toggleChat}
+                className="text-white hover:text-gray-200 transition-transform duration-300 hover:scale-110"
+              >
+                <FaTimes className="text-xl" />
+              </button>
+            </div>
+            <p className="text-xs text-white/80 mt-1">Powered by Llama-3.1-8B Instruct</p>
           </div>
 
-          {/* Chat Messages */}
-          <div className="p-3 h-96 overflow-y-auto space-y-2">
+          {/* Chat Messages - Scrollable */}
+          <div className="flex-1 p-3 overflow-y-auto space-y-2 bg-gray-800">
             {messages.map((msg, i) => (
               <div
                 key={i}
@@ -112,9 +139,26 @@ export default function PortfolioButler() {
                     : "bg-gray-700 text-left"
                 }`}
               >
-                {msg.text}
+                <ReactMarkdown
+                  components={{
+                    ul: ({ children }) => (
+                      <ul className="list-disc list-inside text-sm">{children}</ul>
+                    ),
+                    ol: ({ children }) => (
+                      <ol className="list-decimal list-inside text-sm">{children}</ol>
+                    ),
+                    li: ({ children }) => (
+                      <li className="ml-4">{children}</li>
+                    ),
+                    strong: ({ children }) => (
+                      <strong className="text-red-400 font-semibold">{children}</strong>
+                    ),
+                  }}
+                >
+                  {msg.text}
+                </ReactMarkdown>
                 {isTyping && i === messages.length - 1 && msg.role === "bot" && (
-                  <span className="ml-1 animate-pulse">▌</span>
+                  <span className="ml-1 animate-pulse">|</span>
                 )}
               </div>
             ))}
@@ -124,7 +168,7 @@ export default function PortfolioButler() {
                 <div className="w-2 h-2 bg-red-400 rounded-full animate-bounce"></div>
                 <div className="w-2 h-2 bg-red-400 rounded-full animate-bounce delay-150"></div>
                 <div className="w-2 h-2 bg-red-400 rounded-full animate-bounce delay-300"></div>
-                <span>AjBot is thinking...</span>
+                <span>Aelex is thinking...</span>
               </div>
             )}
 
@@ -137,7 +181,7 @@ export default function PortfolioButler() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-              placeholder="Ask AjBot..."
+              placeholder="Ask Aelex..."
               className="flex-grow px-2 py-1 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
               disabled={isThinking || isTyping}
             />
