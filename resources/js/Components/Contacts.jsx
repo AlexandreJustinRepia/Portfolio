@@ -23,6 +23,12 @@ export default function Contacts({ modalState, setModalState, closeModal }) {
     setCaptchaToken(token);
   };
 
+  const isFormValid =
+    formData.name.trim() !== "" &&
+    formData.email.trim() !== "" &&
+    formData.message.trim() !== "" &&
+    captchaToken;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -166,7 +172,7 @@ export default function Contacts({ modalState, setModalState, closeModal }) {
                 <button
                   type="submit"
                   className="flex items-center justify-center gap-2 w-full px-4 py-2 text-red-400 font-semibold rounded-md border border-red-400 hover:bg-red-400 hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
-                  disabled={!captchaToken || modalState.type === "loading"}
+                  disabled={!captchaToken || modalState.type === "loading" || !isFormValid}
                 >
                   <FaPaperPlane />
                   Send Message

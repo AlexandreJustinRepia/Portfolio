@@ -10,6 +10,7 @@ export default function PortfolioButler() {
   const [isThinking, setIsThinking] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [showBubble, setShowBubble] = useState(true);
   const chatEndRef = useRef(null);
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function PortfolioButler() {
       setIsThinking(false);
       setIsTyping(true);
 
-      // Typing effect: character by character
+      // Typing effect
       let typedText = "";
       const typingInterval = setInterval(() => {
         if (typedText.length < botReply.length) {
@@ -69,7 +70,7 @@ export default function PortfolioButler() {
           clearInterval(typingInterval);
           setIsTyping(false);
         }
-      }, 5);
+      }, 30);
     } catch (error) {
       setIsThinking(false);
       setIsTyping(false);
@@ -87,30 +88,35 @@ export default function PortfolioButler() {
 
   const toggleChat = () => {
     setIsChatOpen((prev) => !prev);
+    setShowBubble(false);
   };
 
   return (
     <>
-      {/* Floating Chat Button with Tooltip */}
+      {/* Floating Chat Button with Animated Speech Bubble */}
       <div className="fixed bottom-6 right-6 z-[9998] group">
         <button
           onClick={toggleChat}
-          className="bg-gray-900 text-red-400 p-4 rounded-full shadow-lg hover:bg-red-500 hover:text-white transition-all duration-300 transform hover:scale-110"
+          className="bg-gray-900 text-red-400 p-4 rounded-full shadow-lg hover:bg-red-500 hover:text-white transition-all duration-300 transform hover:scale-110 animate-pulse-slow"
           data-aos="fade-up"
           data-aos-delay="200"
           aria-label={isChatOpen ? "Close chat" : "Open chat"}
         >
           <FaRobot className="text-3xl" />
         </button>
-        <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
-          Tap me if you want assistance!
-        </div>
+
+        {/* Pop-up Speech Bubble */}
+        {showBubble && (
+          <div className="absolute bottom-full right-0 mb-4 px-4 py-2 bg-gray-800 text-white text-sm rounded-lg shadow-md after:content-[''] after:absolute after:top-full after:right-4 after:border-8 after:border-transparent after:border-t-gray-800 animate-pop-up">
+            Tap me if you want assistance!
+          </div>
+        )}
       </div>
 
-      {/* Chat Window */}
+      {/* Chat Window with Pop-up Animation */}
       {isChatOpen && (
         <div
-          className="fixed bottom-20 right-6 w-80 md:w-96 bg-gray-900 text-white rounded-lg shadow-lg border border-gray-700 flex flex-col z-[9999] h-[500px] max-h-[80vh]"
+          className="fixed bottom-20 right-6 w-80 md:w-96 bg-gray-900 text-white rounded-lg shadow-lg border border-gray-700 flex flex-col z-[9999] h-[500px] max-h-[80vh] animate-pop-up"
           data-aos="slide-up"
           data-aos-duration="300"
         >
@@ -199,6 +205,41 @@ export default function PortfolioButler() {
           </div>
         </div>
       )}
+
+      {/* Custom Animation Styles */}
+      <style jsx>{`
+        @keyframes pop-up {
+          0% {
+            opacity: 0;
+            transform: scale(0.8) translateY(10px);
+          }
+          60% {
+            opacity: 1;
+            transform: scale(1.05) translateY(-5px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.7;
+          }
+        }
+
+        .animate-pop-up {
+          animation: pop-up 0.4s ease-out forwards;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 2s ease-in-out infinite;
+        }
+      `}</style>
     </>
   );
 }
