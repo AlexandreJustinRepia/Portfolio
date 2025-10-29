@@ -48,6 +48,7 @@ export default function Contacts({ modalState, setModalState, closeModal }) {
     });
 
     try {
+      console.log("CAPTCHA token:", captchaToken);
       const response = await axios.post("/contact", {
         ...formData,
         "g-recaptcha-response": captchaToken,

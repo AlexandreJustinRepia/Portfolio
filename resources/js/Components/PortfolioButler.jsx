@@ -207,7 +207,7 @@ export default function PortfolioButler() {
       )}
 
       {/* Custom Animation Styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes pop-up {
           0% {
             opacity: 0;

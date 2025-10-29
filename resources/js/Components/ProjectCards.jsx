@@ -15,8 +15,18 @@ import {
   SiNodedotjs,
   SiMongodb,
 } from "react-icons/si";
+import { FaCheckCircle, FaHourglassHalf, FaEye, FaEyeSlash } from "react-icons/fa"; // Added icons for status and visibility
 
-export default function ProjectCard({ title, description, image, techStack, liveUrl, repoUrl }) {
+export default function ProjectCard({
+  title,
+  description,
+  image,
+  techStack,
+  liveUrl,
+  repoUrl,
+  status,
+  visibility,
+}) {
   // Map tech stack to icons and colors
   const techIcons = {
     Laravel: { icon: <SiLaravel size={20} color="#ff2d2d" />, color: "#ff2d2d" },
@@ -33,6 +43,18 @@ export default function ProjectCard({ title, description, image, techStack, live
     GitHub: { icon: <SiGithub size={20} color="#ffffff" />, color: "#ffffff" },
     "Node.js": { icon: <SiNodedotjs size={20} color="#8cc84b" />, color: "#8cc84b" },
     MongoDB: { icon: <SiMongodb size={20} color="#47a248" />, color: "#47a248" },
+  };
+
+  // Map status to icons and colors
+  const statusConfig = {
+    "In Progress": { icon: <FaHourglassHalf className="text-yellow-400" />, color: "bg-yellow-600" },
+    "Completed": { icon: <FaCheckCircle className="text-green-400" />, color: "bg-green-600" },
+  };
+
+  // Map visibility to icons and colors
+  const visibilityConfig = {
+    Public: { icon: <FaEye className="text-blue-400" />, color: "bg-blue-600" },
+    Private: { icon: <FaEyeSlash className="text-red-400" />, color: "bg-red-600" },
   };
 
   return (
@@ -56,6 +78,28 @@ export default function ProjectCard({ title, description, image, techStack, live
         <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
           {description}
         </p>
+
+        {/* --- Status and Visibility --- */}
+        <div className="flex gap-2 mb-4">
+          {status && (
+            <div
+              className={`flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full text-white ${statusConfig[status]?.color || "bg-gray-600"}`}
+            >
+              {statusConfig[status]?.icon || null}
+              {status}
+            </div>
+          )}
+          {visibility && (
+            <div
+              className={`flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full text-white ${visibilityConfig[visibility]?.color || "bg-gray-600"}`}
+            >
+              {visibilityConfig[visibility]?.icon || null}
+              {visibility}
+            </div>
+          )}
+        </div>
+
+        {/* --- Tech Stack --- */}
         <div className="flex flex-wrap gap-2 mb-4">
           {techStack.map((tech, index) => (
             <div

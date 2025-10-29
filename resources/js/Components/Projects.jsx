@@ -11,6 +11,8 @@ export default function Projects() {
       image: "images/thumbnails/pnc.png",
       techStack: ["Laravel", "Vue", "Tailwind CSS", "MySQL"],
       repoUrl: "https://github.com/AlexandreJustinRepia/PNC",
+      visibility: "Public",
+      status: "Completed",
     },
     {
       title: "DENR - Document Tracking System",
@@ -19,14 +21,18 @@ export default function Projects() {
       image: "images/thumbnails/dts.png",
       techStack: ["Laravel", "Vue", "Tailwind CSS", "MySQL", "Inertia.js"],
       repoUrl: "https://github.com/AlexandreJustinRepia/DTS-DENR",
+      visibility: "Private",
+      status: "Ongoing",
     },
     {
       title: "Portfolio Website",
       description:
         "A personal portfolio showcasing my projects, skills, and contact information with a modern, responsive design.",
       image: "images/thumbnails/aj.png",
-      techStack: ["Laravel" ,"React", "Tailwind CSS", "Inertia.js", "MySQL" ],
+      techStack: ["Laravel", "React", "Tailwind CSS", "Inertia.js", "MySQL"],
       repoUrl: "https://github.com/AlexandreJustinRepia/Portfolio",
+      visibility: "Public",
+      status: "Ongoing",
     },
   ];
 
@@ -59,6 +65,8 @@ export default function Projects() {
               techStack={project.techStack}
               liveUrl={project.liveUrl}
               repoUrl={project.repoUrl}
+              visibility={project.visibility}
+              status={project.status}
             />
           ))}
         </div>

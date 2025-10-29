@@ -109,6 +109,7 @@ class ChatBotController extends Controller
 
         $data = $response->json();
         $botReply = $data['choices'][0]['message']['content'] ?? "Sorry, I couldn’t process that request right now.";
+        \Log::info('$Response:', $data);
 
         // --- Step 5: Send email if ready ---
         if ($isYes && $userData['email'] && $userData['features']) {
