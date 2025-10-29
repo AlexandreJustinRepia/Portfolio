@@ -70,7 +70,7 @@ export default function Skills() {
     {
       title: "Deployment and hosting experience",
       icon: <SiGithub size={48} color="#ffffff" />,
-      proficiency: 95,
+      proficiency: 80,
     },
   ];
 

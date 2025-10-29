@@ -99,13 +99,18 @@ export default function Contacts({ modalState, setModalState, closeModal }) {
       data-aos="fade-left"
     >
       <div className="max-w-6xl mx-auto flex flex-col items-center gap-10 text-center">
+        {/* --- Header --- */}
         <div className="w-full">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 relative inline-block group">
             Contacts
-            <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 h-[3px] w-16 bg-red-500 rounded transition-all duration-500 ease-in-out group-hover:w-32"></span>
+            <span
+              className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 h-[3px] w-16 bg-red-500 rounded
+              transition-all duration-500 ease-in-out group-hover:w-32"
+            ></span>
           </h2>
         </div>
 
+        {/* --- Contact Cards and Form --- */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {/* Contact Cards */}
           {contacts.map((contact, index) => (
@@ -118,6 +123,7 @@ export default function Contacts({ modalState, setModalState, closeModal }) {
             />
           ))}
 
+          {/* Contact Form Card */}
           <div
             className="bg-gray-900 rounded-xl shadow-lg overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-2xl"
             data-aos="fade-up"
@@ -165,8 +171,8 @@ export default function Contacts({ modalState, setModalState, closeModal }) {
                     ref={recaptchaRef}
                     sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                     onChange={handleCaptcha}
-                    theme="dark"  // Customized to dark theme to match the portfolio's design
-                    size="normal" // Can be changed to "compact" if a smaller size is preferred
+                    theme="dark"
+                    size="normal"
                   />
                 </div>
 
