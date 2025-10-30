@@ -34,6 +34,10 @@ export default function Projects() {
       visibility: "Public",
       status: "Ongoing",
     },
+    {
+      title: "ZKTeco-Extractor",
+      description: "A PHP tool that converts ZKTeco log files into a formatted Daily Time Record (DTR) with auto time classification and one-click copy to clipboard."
+    }
   ];
 
   return (
