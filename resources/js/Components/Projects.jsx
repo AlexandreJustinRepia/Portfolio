@@ -35,9 +35,31 @@ export default function Projects() {
       status: "Ongoing",
     },
     {
-      title: "ZKTeco-Extractor",
-      description: "A PHP tool that converts ZKTeco log files into a formatted Daily Time Record (DTR) with auto time classification and one-click copy to clipboard."
-    }
+      title: "ZkTeco Dtr Extractor",
+      description:
+        "ZKTeco DTR Generator – A PHP tool that converts ZKTeco logs into DTRs ready to copy directly into Civil Service Form 48.",
+      image: "images/thumbnails/dtr.png",
+      techStack: [
+        // Backend
+        "PHP", "HTML5", "CSS", "JavaScript", "Tailwind CSS"
+      ],
+      repoUrl: "https://github.com/AlexandreJustinRepia/zkteco-dtr-extractor",
+      visibility: "Private",
+      status: "Finished",
+    },
+    {
+      title: "Patent Excel Searcher",
+      description:
+        "Free Patent Record Matcher – Flask app that finds and displays patent records from Excel using fuzzy name matching.",
+      image: "images/thumbnails/patent.png",
+      techStack: [
+        // Backend
+        "Python", "Flask", "HTML5", "Tailwind CSS", "Pandas","openpyxl", "difflib.SequenceMatcher", "Excel",
+      ],
+      repoUrl: "https://github.com/AlexandreJustinRepia/patent-excel-searcher",
+      visibility: "Private",
+      status: "Finished",
+    },
   ];
 
   return (
