@@ -45,7 +45,7 @@ export default function Projects() {
       ],
       repoUrl: "https://github.com/AlexandreJustinRepia/zkteco-dtr-extractor",
       visibility: "Private",
-      status: "Finished",
+      status: "Completed",
     },
     {
       title: "Patent Excel Searcher",
@@ -58,7 +58,7 @@ export default function Projects() {
       ],
       repoUrl: "https://github.com/AlexandreJustinRepia/patent-excel-searcher",
       visibility: "Private",
-      status: "Finished",
+      status: "Completed",
     },
   ];
 
