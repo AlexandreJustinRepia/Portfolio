@@ -6,13 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class ChatBotController extends Controller
 {
     public function reply(Request $request)
     {
-        \Log::info('✅ Laravel logging test works!');
-
         $userMessage = trim($request->input('message'));
         $conversation = $request->input('conversation', []);
         $sessionId = $request->input('session_id', 'default');
@@ -26,15 +25,23 @@ class ChatBotController extends Controller
             'asking_for_features' => false,
         ]);
 
-        // Keyword sets
+        // --- Keyword sets ---
         $interestKeywords = ['hire', 'buy', 'inquire', 'project', 'services', 'collab', 'work with', 'build', 'create', 'develop'];
         $emailKeywords = ['@', 'gmail', 'yahoo', 'email', 'mail'];
+        $projectsKeywords = ['projects', 'work', 'portfolio', 'examples'];
 
         $isInquiry = collect($interestKeywords)->contains(fn($w) => str_contains($lowerMsg, $w));
         $hasEmail = collect($emailKeywords)->contains(fn($w) => str_contains($lowerMsg, $w));
+        $isAskingProjects = collect($projectsKeywords)->contains(fn($w) => str_contains($lowerMsg, $w));
         $isYes = str_contains($lowerMsg, 'yes') || str_contains($lowerMsg, 'sure') || str_contains($lowerMsg, 'okay');
 
-        // --- Step 1: Handle initial inquiry ---
+        // --- Step 0: User asks about projects ---
+        if ($isAskingProjects) {
+            $botReply = "Alexandre has worked on projects like **PawsnClawsPH**, a pet adoption hub, and a **Document Tracking System** for DENR. Would you like to know more about any specific project?";
+            return response()->json(['reply' => $botReply]);
+        }
+
+        // --- Step 1: Handle project/service inquiry ---
         if ($isInquiry && !$userData['asking_for_features']) {
             $userData['asking_for_features'] = true;
             Cache::put("aelex_user_{$sessionId}", $userData, now()->addMinutes(30));
@@ -52,7 +59,7 @@ class ChatBotController extends Controller
             return response()->json(['reply' => $botReply]);
         }
 
-        // --- Step 3: Capture features ONLY if bot asked for them ---
+        // --- Step 3: Capture features ---
         if ($userData['asking_for_features']) {
             $features = [];
             $parts = preg_split('/,|\n|\./', $userMessage);
@@ -68,7 +75,7 @@ class ChatBotController extends Controller
 
             if ($cleanFeatures) {
                 $userData['features'] = $cleanFeatures;
-                $userData['asking_for_features'] = false; // reset flag
+                $userData['asking_for_features'] = false;
                 Cache::put("aelex_user_{$sessionId}", $userData, now()->addMinutes(30));
 
                 $botReply = "Awesome! Here are the features you mentioned:\n\n{$cleanFeatures}\n\nWould you like me to forward these to Alexandre so he can reach out personally?";
@@ -76,9 +83,9 @@ class ChatBotController extends Controller
             }
         }
 
-        // --- Step 4: Generate bot reply via API for normal conversation ---
+        // --- Step 4: Generate bot reply via Hugging Face API ---
         $context = "
-        You are Aelex, a friendly and professional AI assistant representing Alexandre Justin Repia, a full-stack developer.
+        You are Aelex, a friendly and professional AI assistant representing Alexandre Justin Repia.
 
         🔹 Aelex's Personality:
         - Polite, concise, and professional.
@@ -92,29 +99,37 @@ class ChatBotController extends Controller
         'Currently, Alexandre is working on his personal portfolio website and a Document Tracking System for the Department of Environment and Natural Resources (DENR).'
         ";
 
+        // Convert conversation roles: bot -> assistant
+        $hfMessages = collect($conversation)->map(fn($m) => [
+            'role' => $m['role'] === 'bot' ? 'assistant' : $m['role'],
+            'content' => $m['text']
+        ])->toArray();
+
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . env('HUGGINGFACE_API_KEY'),
             'Content-Type' => 'application/json',
         ])->post('https://router.huggingface.co/v1/chat/completions', [
             'model' => 'meta-llama/Llama-3.1-8B-Instruct:novita',
-            'messages' => [
-                ['role' => 'system', 'content' => $context],
-                ...collect($conversation)->map(fn($m) => [
-                    'role' => $m['role'],
-                    'content' => $m['text']
-                ])->toArray(),
-                ['role' => 'user', 'content' => $userMessage],
-            ],
+            'messages' => array_merge(
+                [['role' => 'system', 'content' => $context]],
+                $hfMessages,
+                [['role' => 'user', 'content' => $userMessage]]
+            ),
+        ]);
+
+        Log::info('HuggingFace API request payload', [
+            'model' => 'meta-llama/Llama-3.1-8B-Instruct:novita',
+            'messages' => array_merge([['role' => 'system', 'content' => $context]], $hfMessages, [['role' => 'user', 'content' => $userMessage]]),
+            'response_status' => $response->status(),
+            'response_body' => $response->body(),
         ]);
 
         $data = $response->json();
         $botReply = $data['choices'][0]['message']['content'] ?? "Sorry, I couldn’t process that request right now.";
-        \Log::info('$Response:', $data);
 
         // --- Step 5: Send email if ready ---
         if ($isYes && $userData['email'] && $userData['features']) {
             try {
-                // 1️⃣ Send email to Alexandre
                 Mail::raw(
                     "📧 From: {$userData['email']}\n\n" .
                     "📝 Inquiry:\n{$userMessage}\n\n" .
@@ -125,7 +140,6 @@ class ChatBotController extends Controller
                     }
                 );
 
-                // 2️⃣ Send confirmation email to client
                 $htmlMessage = "
                 <html>
                 <head>
@@ -160,7 +174,7 @@ class ChatBotController extends Controller
                 $botReply = "Got it! 📧 I’ve sent your project details to Alexandre and also sent you a confirmation email. He’ll reach out to you soon!";
                 Cache::forget("aelex_user_{$sessionId}");
             } catch (\Exception $e) {
-                \Log::error('❌ Mail send failed: ' . $e->getMessage());
+                Log::error('Mail sending error', ['exception' => $e]);
                 $botReply = "Hmm, something went wrong while sending your details. Could you try again later?";
             }
 

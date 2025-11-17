@@ -131,7 +131,7 @@ export default function PortfolioButler() {
                 <FaTimes className="text-xl" />
               </button>
             </div>
-            <p className="text-xs text-white/80 mt-1">Powered by Llama-3.1-8B Instruct</p>
+            <p className="text-xs text-white/80 mt-1">Alex AI Assistant</p>
           </div>
 
           {/* Chat Messages - Scrollable */}
@@ -188,7 +188,7 @@ export default function PortfolioButler() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               placeholder="Ask Aelex..."
-              className="flex-grow px-2 py-1 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+              className="flex-grow px-2 py-1 bg-gray-800 text-white rounded-md border border-red-400 focus:outline-none focus:ring-0 focus:border-red-400"
               disabled={isThinking || isTyping}
             />
             <button

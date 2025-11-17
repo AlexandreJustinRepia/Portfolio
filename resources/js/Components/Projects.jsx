@@ -22,7 +22,7 @@ export default function Projects() {
       techStack: ["Laravel", "Vue", "Tailwind CSS", "MySQL", "Inertia.js"],
       repoUrl: "https://github.com/AlexandreJustinRepia/DTS-DENR",
       visibility: "Private",
-      status: "Ongoing",
+      status: "In Progress",
     },
     {
       title: "Portfolio Website",
@@ -32,7 +32,7 @@ export default function Projects() {
       techStack: ["Laravel", "React", "Tailwind CSS", "Inertia.js", "MySQL"],
       repoUrl: "https://github.com/AlexandreJustinRepia/Portfolio",
       visibility: "Public",
-      status: "Ongoing",
+      status: "In Progress",
     },
     {
       title: "ZkTeco Dtr Extractor",
@@ -59,6 +59,19 @@ export default function Projects() {
       repoUrl: "https://github.com/AlexandreJustinRepia/patent-excel-searcher",
       visibility: "Private",
       status: "Completed",
+    },
+    {
+      title: "DENR - Daily Time Record Portal",
+      description:
+        "Free Patent Record Matcher – Flask app that finds and displays patent records from Excel using fuzzy name matching.",
+      image: "images/thumbnails/dtr-portal.png",
+      techStack: [
+        // Backend
+        "Laravel", "React", "Tailwind CSS", "MySQL","PHP", "Inertia.js"
+      ],
+      repoUrl: "https://github.com/AlexandreJustinRepia/dtr-denr",
+      visibility: "Public",
+      status: "In Progress",
     },
   ];
 

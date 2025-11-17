@@ -14,6 +14,7 @@ import {
   SiNodedotjs,
   SiPhp,
   SiHtml5,
+  SiPython,
 } from "react-icons/si";
 
 export default function Skills() {

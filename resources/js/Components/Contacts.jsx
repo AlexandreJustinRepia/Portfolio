@@ -143,7 +143,7 @@ export default function Contacts({ modalState, setModalState, closeModal }) {
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="Your Name"
-                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-400"
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-red-400 focus:outline-none focus:ring-0 focus:border-red-400"
                   required
                 />
                 <input
@@ -152,7 +152,7 @@ export default function Contacts({ modalState, setModalState, closeModal }) {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Your Email"
-                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-400"
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-red-400 focus:outline-none focus:ring-0 focus:border-red-400"
                   required
                 />
                 <textarea
@@ -161,7 +161,7 @@ export default function Contacts({ modalState, setModalState, closeModal }) {
                   onChange={handleInputChange}
                   placeholder="Your Message"
                   rows="4"
-                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-400"
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-md border border-red-400 focus:outline-none focus:ring-0 focus:border-red-400"
                   required
                 ></textarea>
 
